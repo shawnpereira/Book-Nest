@@ -35,7 +35,7 @@ router.get("/", async (request, response) => {
 
     return response.status(200).json({
       count: books.length, // so this will display the number of books present
-      data: books, // this will display books so we have just structured it properly
+      display: books, // this will display books so we have just structured it properly
     });
   } catch (error) {
     console.log(error.message);
