@@ -7,14 +7,21 @@ import { Book } from "../model/bookModel.js";
 //
 router.post("/", async (req, res) => {
   try {
-    if (!req.body.title || !req.body.author || !req.body.publishYear) {
+    if (
+      !req.body.title ||
+      !req.body.author ||
+      !req.body.publishYear ||
+      !req.body.content
+    ) {
       return res.status(400).send({
-        message: "Send all required fields: title, author, publishYear",
+        message:
+          "Send all required fields: title, author, publishYear, content",
       });
     }
     const newBook = {
       title: req.body.title,
       author: req.body.author,
+      content: req.body.content,
       publishYear: req.body.publishYear,
     };
 
@@ -35,6 +42,7 @@ router.get("/", async (request, response) => {
 
     return response.status(200).json({
       count: books.length, // so this will display the number of books present
+
       display: books, // this will display books so we have just structured it properly
     });
   } catch (error) {
@@ -61,21 +69,32 @@ router.get("/:id", async (request, response) => {
   }
 });
 //
-//Delete
+//Update
 //
 router.put("/:id", async (request, response) => {
   try {
+    const { id } = request.params;
+
+    // Fetch the first document from the database
+    const firstBook = await Book.findOne({}).sort({ createdAt: 1 });
+
+    // Check if the ID matches the ID of the first document
+    if (firstBook && id === firstBook._id.toString()) {
+      return response
+        .status(403)
+        .json({ message: "Cannot update the first document." });
+    }
+
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear
+      !request.body.publishYear ||
+      !request.body.content
     ) {
       return response.status(400).send({
         message: "Send all required fields: title, author, publishYear",
       });
     }
-
-    const { id } = request.params;
 
     const result = await Book.findByIdAndUpdate(id, request.body);
 
@@ -89,11 +108,23 @@ router.put("/:id", async (request, response) => {
     response.status(500).send({ message: error.message });
   }
 });
+
 //
+//Delete
 //
 router.delete("/:id", async (request, response) => {
   try {
     const { id } = request.params;
+
+    // Fetch the first document from the database
+    const firstBook = await Book.findOne({}).sort({ createdAt: 1 });
+
+    // Check if the ID matches the ID of the first document
+    if (firstBook && id === firstBook._id.toString()) {
+      return response
+        .status(403)
+        .json({ message: "Cannot delete the first document." });
+    }
 
     const result = await Book.findByIdAndDelete(id);
 
@@ -107,5 +138,5 @@ router.delete("/:id", async (request, response) => {
     response.status(500).send({ message: error.message });
   }
 });
-//
+
 export { router };

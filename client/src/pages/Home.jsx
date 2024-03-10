@@ -28,17 +28,18 @@ const Home = () => {
 
   return (
     <div className="bg-blue-200 p-6">
-      <Link Link to={`/create`}>
-        <div className="  flex justify-between p-3 mb-5">
-          <h1 className=" text-6xl font-semibold ">Library</h1>
+      <div className="  flex justify-between p-3 mb-5">
+        <h1 className=" text-6xl font-semibold ">Library</h1>
+        <Link Link to={`/create`}>
           <span className=" rounded-md bg-slate-100 shadow-md hover:bg-white hover:shadow-2xl flex p-4 space-x-5">
             <span className="text-2xl font-semibold ">Add a book</span>{" "}
             <span className=" flex justify-center items-center text-3xl border-2 rounded-full border-slate-600">
               <IoMdAdd />
             </span>
           </span>
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto  bg-blue-200  ">
         {books.map((book, index) => (
           <div
@@ -47,19 +48,25 @@ const Home = () => {
           >
             <div className="mb-4">
               <span className="font-bold">No:</span>
-              <span>{index + 1}</span>
+              <span className="ml-2">{index + 1}</span>
             </div>
             <div className="mb-4">
               <span className="font-bold">Title:</span>
-              <span>{book.title}</span>
+              <span span className="ml-2">
+                {book.title}
+              </span>
             </div>
             <div className="mb-4">
               <span className="font-bold">Author:</span>
-              <span>{book.author}</span>
+              <span span className="ml-2">
+                {book.author}
+              </span>
             </div>
             <div className="mb-4">
               <span className="font-bold">Publish Year:</span>
-              <span>{book.publishYear}</span>
+              <span span className="ml-2">
+                {book.publishYear}
+              </span>
             </div>
             <div className="flex justify-between">
               <Link to={`/details/${book._id}`}>
