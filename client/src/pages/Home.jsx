@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className="bg-blue-200 p-6">
       <div className="  flex justify-between p-3 mb-5">
-        <h1 className=" text-6xl font-semibold ">Library</h1>
+        <h1 className=" text-6xl font-semibold ">Book Nest</h1>
         <Link Link to={`/create`}>
           <span className=" rounded-md bg-slate-100 shadow-md hover:bg-white hover:shadow-2xl flex p-4 space-x-5">
             <span className="text-2xl font-semibold ">Add a book</span>{" "}
